@@ -28,7 +28,7 @@ export default async function Pagelayout({ children }: { children: React.ReactNo
             
             <section className="flex h-full flex-1 flex-col">
                 
-                <MobileNavigation /> 
+                <MobileNavigation {...currentUser}/> 
                 <Header/>
                 <div className="main-content">
                     {children}

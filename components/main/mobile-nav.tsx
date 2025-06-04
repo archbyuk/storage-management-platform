@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { navItems } from '@/constants/index';
 import { SignOutUser } from '@/lib/action/user.action';
+import FileUploader from './file-uploader';
 
 interface MobileNav {
     fullName: string;
@@ -21,6 +22,10 @@ export default function MobileNavigation ({fullName, avatar, email}: MobileNav) 
 
     const [open, setOpen] = useState(false);
     const pathname = usePathname();
+
+    const handleLogout = async () => {
+        await SignOutUser();
+    };
   
     return (
         <header className="mobile-header">
@@ -90,12 +95,12 @@ export default function MobileNavigation ({fullName, avatar, email}: MobileNav) 
                     <Separator className="my-5 bg-light-200/20" />
 
                     <div className="flex flex-col justify-between gap-5 pb-5">
-                        <FileUploader ownerId={ownerId} accountId={accountId} />
+                        <FileUploader />
                         
                         <Button
                             type="submit"
                             className="mobile-sign-out-button"
-                            onClick={async () => await SignOutUser()}
+                            onClick={ handleLogout }
                         >
                             <Image
                                 src="/assets/icons/logout.svg"

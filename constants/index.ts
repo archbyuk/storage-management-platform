@@ -29,3 +29,5 @@ export const navItems = [
 export const avatarPlaceholderUrl = 
     // "https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcGYtaWNvbjQtamlyMjA2NC1wb3ItbC5qcGc.jpg"
     "https://wallpapers.com/images/hd/placeholder-profile-icon-8qmjk1094ijhbem9.jpg"
+
+export const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
