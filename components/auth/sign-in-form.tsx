@@ -4,6 +4,8 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import Image from "next/image"
+import { useState } from "react"
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -15,16 +17,15 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
-import Link from "next/link"
-import { createAccount } from "@/lib/action/user.action"
 
-const formSchema = z.object({
-  username: z.string().min(2).max(50),
-})
+import { createAccount, SignInUser } from "@/lib/action/user.action"
+import OtpModal from "@/components/auth/otp-modal"
+import { toast } from "sonner"
+
 
 type FormType = "sign-in" | "sign-up";
 
+// Define the schema for the authentication form using Zod
 const authFormSchema = (formType: FormType) => {
   return z.object({
     email: z.string().email(),                                        // email validation: only valid email is accepted 
@@ -36,9 +37,9 @@ const authFormSchema = (formType: FormType) => {
 
 export default function SignInForm({ type }: { type: FormType }) {
   const [isLoading, setIsLoading] = useState(false)                  
-  const [errorMessage, setErrorMessage] = useState('')           
-  const [accountId, setAccountId] = useState<string | null>(null)      
-   
+  const [errorMessage, setErrorMessage] = useState("")           
+  const [accountId, setAccountId] = useState<string | null>(null)    
+  
   const formSchema = authFormSchema(type)                             // get the form schema based on the form type
   
   // Define the form using react-hook-form and zod for validation
@@ -53,20 +54,29 @@ export default function SignInForm({ type }: { type: FormType }) {
   // Define a submit handler
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true)
-    setErrorMessage('')
+    setErrorMessage("") // reset error message before submitting
 
     try {
-      const user = await createAccount(
-        { 
-          fullName: values.fullName || "",  
-          email: values.email 
-        }
-      );
-      setAccountId(user.accountId ?? null); 
+      const user = 
+        type === 'sign-up' 
+          ? await createAccount({ 
+            fullName: values.fullName || "",  
+            email: values.email 
+          })
+          
+          // if form type is sign-in, call SignInUser function
+          : await SignInUser({ email: values.email})
+      
+      setAccountId(user?.accountId ?? null);
+      console.log("User account ID:", user?.accountId);
+
+      if (type === "sign-in" && !user?.accountId) {
+       return toast.error("Account not found. Please sign up first.") // if account not found, show error message
+      }
     }
     
     catch {
-      setErrorMessage("Error creating account")
+      setErrorMessage("Failed to create account. Please try again.") // set error message if account creation fails
     }
     
     finally {
@@ -86,7 +96,7 @@ export default function SignInForm({ type }: { type: FormType }) {
           </h1>
           
           {/* if form type is sign-up, Full Name input form & Email input form */}
-          {type === "sign-up" && 
+          {type === "sign-up" && (
             <FormField
               control={form.control}
               name="fullName"
@@ -107,7 +117,7 @@ export default function SignInForm({ type }: { type: FormType }) {
                 </FormItem>
               )}
             /> 
-          }
+          )}
 
           {/* if form type is sign-in, only Email input form */}
           <FormField
@@ -117,6 +127,7 @@ export default function SignInForm({ type }: { type: FormType }) {
               <FormItem>
                 <div className="shad-form-item">
                   <FormLabel className="shad-form-label">Email</FormLabel>
+                  
                   <FormControl>
                     <Input 
                       className="shad-input" 
@@ -171,6 +182,9 @@ export default function SignInForm({ type }: { type: FormType }) {
       </Form>
       
       {/* OTP Validation */}
+      {accountId && (
+        <OtpModal email={form.getValues("email")} accountId={accountId} />
+      )}
     </>
   )
 };

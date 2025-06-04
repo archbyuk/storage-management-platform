@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-export default function layout ({children}: {children: React.ReactNode}) {
+export default function AuthLayout ({children}: {children: React.ReactNode}) {
   return (
     <div className='flex min-h-screen'>
       
