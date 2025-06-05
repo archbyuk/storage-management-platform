@@ -3,13 +3,15 @@
 import { Button } from "../ui/button";
 import Image from "next/image";
 import Search from "./search";
+import FileUploader from "./file-uploader";
 
 export default function Header () {
   return (
     <header className="header">
         <Search/>
+        
         <div className="header-wrapper">
-            FileUpLoader
+            <FileUploader accountId={""} ownerId={""}/>
             <form>
                 <Button className="sign-out-button" type="submit">
                     <Image

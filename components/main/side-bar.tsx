@@ -20,7 +20,7 @@ export default function SideBar( { fullName, email, avatar }: SideBarProps) {
         <aside className="sidebar">
             <Link href="/">
                 {/* web sidebar */}
-                 <Image
+                <Image
                     src="/assets/icons/logo-full-brand.svg"
                     alt="logo"
                     width={160}
@@ -44,8 +44,8 @@ export default function SideBar( { fullName, email, avatar }: SideBarProps) {
                     {navItems.map(( { url, name, icon } ) => (
                         <Link key={ name } href={ url } className="lg:w-full">
                             <li className={cn(
-                                "sidebar-nav-item", 
-                                pathname ===url && "shad-active",
+                                    "sidebar-nav-item", 
+                                    pathname ===url && "shad-active",
                                 )}
                             >
                                 <Image

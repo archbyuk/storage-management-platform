@@ -18,6 +18,21 @@ export default async function Pagelayout({ children }: { children: React.ReactNo
         redirect("/sign-in");
     }
 
+    // Currnet User console example:
+    // Current User: {
+    //     fullName: 'jinuk',
+    //     email: 'jinuk.work@gmail.com',
+    //     avatar: 'https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcGYtaWNvbjQtamlyMjA2NC1wb3ItbC5qcGc.jpg',
+    //     accountId: '683190320001f514d344',
+    //     '$id': '683f9726001819522e2a',
+    //     '$createdAt': '2025-06-04T00:45:26.741+00:00',
+    //     '$updatedAt': '2025-06-04T00:45:26.741+00:00',
+    //     '$permissions': [],
+    //     files: [],
+    //     '$databaseId': '6826f0420018f99dd1ae',
+    //     '$collectionId': '6826f0620032a73a29c3'
+    //   }
+
     return (
         <main className="flex h-screen">
             <SideBar
@@ -28,7 +43,13 @@ export default async function Pagelayout({ children }: { children: React.ReactNo
             
             <section className="flex h-full flex-1 flex-col">
                 
-                <MobileNavigation {...currentUser}/> 
+                <MobileNavigation 
+                    fullName={currentUser.fullName} 
+                    avatar={currentUser.avatar} 
+                    email={currentUser.email} 
+                    accountId={currentUser.accountId}
+                    $id={currentUser.$id}
+                /> 
                 <Header/>
                 <div className="main-content">
                     {children}

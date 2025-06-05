@@ -16,9 +16,11 @@ interface MobileNav {
     fullName: string;
     email: string;
     avatar: string;
+    accountId: string;
+    $id: string;
 }
 
-export default function MobileNavigation ({fullName, avatar, email}: MobileNav) {
+export default function MobileNavigation ({ fullName, avatar, email, accountId, $id: ownerId }: MobileNav) {
 
     const [open, setOpen] = useState(false);
     const pathname = usePathname();
@@ -38,13 +40,14 @@ export default function MobileNavigation ({fullName, avatar, email}: MobileNav) 
             />
 
             <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger>
-                <Image
-                    src="/assets/icons/menu.svg"
-                    alt="Search"
-                    width={30}
-                    height={30}
-                />
+                
+                <SheetTrigger>
+                    <Image
+                        src="/assets/icons/menu.svg"
+                        alt="Search"
+                        width={30}
+                        height={30}
+                    />
                 </SheetTrigger>
 
                 <SheetContent className="shad-sheet h-screen px-3">
@@ -62,7 +65,9 @@ export default function MobileNavigation ({fullName, avatar, email}: MobileNav) 
                                 <p className="caption">{email}</p>
                             </div>
                         </div>
+                        
                         <Separator className="mb-4 bg-light-200/20" />
+                    
                     </SheetTitle>
                     
                     <nav className="mobile-nav">
@@ -76,14 +81,14 @@ export default function MobileNavigation ({fullName, avatar, email}: MobileNav) 
                                         )}
                                     >
                                         <Image
-                                        src={icon}
-                                        alt={name}
-                                        width={24}
-                                        height={24}
-                                        className={cn(
-                                            "nav-icon",
-                                            pathname === url && "nav-icon-active",
-                                        )}
+                                            src={icon}
+                                            alt={name}
+                                            width={24}
+                                            height={24}
+                                            className={cn(
+                                                "nav-icon",
+                                                pathname === url && "nav-icon-active",
+                                            )}
                                         />
                                         <p>{name}</p>
                                     </li>
@@ -95,7 +100,7 @@ export default function MobileNavigation ({fullName, avatar, email}: MobileNav) 
                     <Separator className="my-5 bg-light-200/20" />
 
                     <div className="flex flex-col justify-between gap-5 pb-5">
-                        <FileUploader />
+                        <FileUploader ownerId={ownerId} accountId={accountId}/>
                         
                         <Button
                             type="submit"
