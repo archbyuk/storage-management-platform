@@ -1,13 +1,15 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useDropzone } from "react-dropzone";
 import { useCallback, useState } from "react";
 import { MAX_FILE_SIZE } from "@/constants/index";
 import { convertFileToUrl, getFileType } from "@/lib/utils";
-import Thumbnail from "./thumbnail";
+import Thumbnail from "@/components/main/thumbnail";
+import { Button } from "@/components/ui/button";
 import { toast } from "sonner"
+import { uploadFile } from "@/lib/action/file.action";
+import { usePathname } from "next/navigation";
 
 interface FileUploaderProps {
     accountId: string;
@@ -16,9 +18,11 @@ interface FileUploaderProps {
 
 export default function FileUploader( { accountId, ownerId }: FileUploaderProps ) {
     const [files, setFiles] = useState<File[]>([]);
+    const path = usePathname();         // get the current path to upload files to the correct directory
 
     const onDrop = useCallback( 
-        async ( acceptedFiles: File[] ) => {
+        // onDrop function to handle file selection and upload
+        async ( acceptedFiles: File[] ) => {    // acceptedFiles is an array of files selected by the user (provided by react-dropzone)
             setFiles(acceptedFiles);    // set the files state with the accepted files
             console.log("Files accepted:", acceptedFiles);
 
@@ -28,7 +32,7 @@ export default function FileUploader( { accountId, ownerId }: FileUploaderProps 
                     
                     // show a toast notification if the file is too large
                     return (
-                        toast(
+                        toast (
                             <p className="body-2 text-light-100">
                                 <span className="font-semibold">
                                     {file.name}
@@ -38,13 +42,24 @@ export default function FileUploader( { accountId, ownerId }: FileUploaderProps 
                     );
                 }
 
-                return uploadFile()
-
+                // upload the file to the Appwrite storage bucket - and delete file object array
+                return uploadFile( { file, ownerId, accountId, path } ).then(
+                    (uploadFile) => {
+                        if (uploadFile) {
+                            console.log('uploaded file:', uploadFile);
+                            setFiles((prevFiles) =>
+                                prevFiles.filter((f) => f.name !== file.name)
+                            );
+                        }
+                    }
+                )
             }
         );
 
+        // wait for all file uploads to complete
+        await Promise.all(uploadPromises);
 
-    }, [])
+    }, [ ownerId, accountId, path])
 
     // react-dropzone hooks: files selected, file upload progress, and file upload errors / drag-and-drop functionality
     // getRootProps: provides the props for the dropzone area (triggering the file selection)

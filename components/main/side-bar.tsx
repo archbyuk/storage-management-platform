@@ -24,8 +24,11 @@ export default function SideBar( { fullName, email, avatar }: SideBarProps) {
                     src="/assets/icons/logo-full-brand.svg"
                     alt="logo"
                     width={160}
-                    height={50}
+                    height={30}
                     className="hidden h-auto lg:block"
+                    // style={ 
+                    //     {height: "auto", width: "auto"}
+                    // }
                 />
 
                 {/* mobile sidebar */}

@@ -98,3 +98,24 @@ export const getFileIcon = (type: string | FileType, extension: string | undefin
           }
     }
 }
+
+// APPWRITE URL UTILS
+// Construct appwrite file URL - https://appwrite.io/docs/apis/rest#images
+export const constructFileUrl = (bucketFileId: string) => {
+    return `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${process.env.NEXT_PUBLIC_APPWRITE_BUCKET}/files/${bucketFileId}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT}`;
+};
+
+
+// Get file types based on the type parameter
+export const getFileTypesParams = (type: string): FileType[] => {
+    switch (type) {
+        case "document":
+            return [ "document" ];
+        case "image":
+            return [ "image" ];
+        case "video":
+            return [ "video", "audio" ];
+        default:
+            return [ "other" ];
+    }
+}

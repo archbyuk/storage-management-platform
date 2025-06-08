@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
         domains: [
             "images.rawpixel.com",
         ]
+    }, 
+    experimental: {
+        serverActions: {
+            bodySizeLimit: "50MB",
+        }
     }
 };
 
