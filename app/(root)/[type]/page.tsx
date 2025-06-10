@@ -1,10 +1,15 @@
 import { getFileTypesParams } from "@/lib/utils";
 import Sort from "@/components/main/sort";
+import { getFiles } from "@/lib/action/file.action";
 
-export default async function Page({ params }: SearchParamProps ) {
+export default async function Page({ params }: SearchParamsProps ) {
     const { type } = await params;
+    const searchText = await 
 
     const types = getFileTypesParams(type);
+    const files = getFiles( {
+        types, searchText, sort
+    } )
 
     return(
         <div className="page-container">
@@ -26,6 +31,11 @@ export default async function Page({ params }: SearchParamProps ) {
                     </div>
                 </div>
             </section>
+
+            {/* Render the files */}
+            {/* {files.total > 0 ? (
+                
+            )} */}
 
         </div>
     )

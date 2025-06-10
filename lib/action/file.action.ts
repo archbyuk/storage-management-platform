@@ -73,8 +73,8 @@ export const uploadFile = async ( { file, ownerId, accountId, path }: UploadFile
 interface CreateQueriesProps {
     currentUser: Models.Document;
     types: string[];
-    searchText: string;
-    sort: string;
+    searchText?: string;
+    sort: string | undefined;
     limit?: number;
 }
 
@@ -88,6 +88,7 @@ const createQueries = ( { currentUser, types, searchText, sort, limit }: CreateQ
             ]
         )
     ]
+    console.log("Check queries: ", queries);
 
     if (types.length > 0) queries.push(
         Query.equal("type", types)
@@ -107,7 +108,7 @@ const createQueries = ( { currentUser, types, searchText, sort, limit }: CreateQ
         queries.push(
             orderBy === "asc" ? Query.orderAsc(sortBy) : Query.orderDesc(sortBy)
         )
-    }
+    };
 
     return queries;
 }
@@ -121,7 +122,20 @@ export const getFiles = async ( { types, searchText, sort, limit }: GetFilesProp
 
         if (!currentUser) throw new Error("User not authenticated");
 
-        const queries = createQueries
+        // Create queries based on the current user context and provided parameters
+        const queries = createQueries( {
+            currentUser, types, searchText, sort, limit,
+        } );
+
+        const files = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.filesCollectionId,
+            queries
+        );
+
+        console.log("Files fetched: ", {files} );
+
+        return parseStringify(files);       // Return the fetched files as a parsed JSON object
     }
 
     catch (error) {

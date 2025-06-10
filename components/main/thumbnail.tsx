@@ -5,13 +5,14 @@ interface TumbnailProps {
     type: string;
     extension: string;
     url: string;
+    className?: string
 }
 
-export default function Thumbnail( { type, extension, url }: TumbnailProps) {
+export default function Thumbnail( { type, extension, url, className }: TumbnailProps) {
     const isImage = type === "image" && extension !== "svg";
 
     return (
-        <figure className="thumbnail">
+        <figure className={cn("thumbnail", className)}>
             <Image
                 src={isImage ? url : getFileIcon(type, extension)}
                 alt="File thumbnail"

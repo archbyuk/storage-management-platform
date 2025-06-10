@@ -18,7 +18,7 @@ declare interface SearchParamProps {
 
 declare interface GetFilesProps {
     types: FileType[];
-    searchText: string;
+    searchText?: string;
     sort?: string;
     limit?: number;
 }

@@ -119,3 +119,30 @@ export const getFileTypesParams = (type: string): FileType[] => {
             return [ "other" ];
     }
 }
+
+export const formatDateTime = (isoString: string | null | undefined) => {
+    if (!isoString) return "-"
+
+    const date = new Date(isoString);               // Convert ISO string to Date object
+
+    // Get hours and adjust for 12-hour format
+    let hours = date.getHours();                    // Get hours from the date object from javaScript Date API
+    const minutes = date.getMinutes();              // Get minutes from the date object from javaScript Date API
+    const period = hours >= 12 ? "PM" : "AM";       // Determine AM/PM period
+
+    hours = hours % 12;                             // Convert to 12-hour format for display
+
+    const time = `${hours}:${minutes.toString().padStart(2, "0")}${period}`;
+    const day = date.getDate();                     // Get day of the month from the date object from javaScript Date API
+    const monthName = [
+        "January", "February", "March", "April",
+        "May", "June", "July", "August",
+        "September", "October", "November", "December"
+    ];
+
+    const month = monthName[date.getMonth()];       // Get month name from the date object from javaScript Date API
+
+    // example: "2:30PM, 15 March"
+    return `${time}, ${day} ${month}`;              // Return formatted data and time string
+
+}
