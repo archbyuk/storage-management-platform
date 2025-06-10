@@ -45,18 +45,18 @@ export const sendEmailOTP = async ( { email } : { email: string } ) => {
 
 // This function creates a new user account or retrieves an existing user by their email address
 export const createAccount = async ( { fullName, email } : { fullName: string, email: string } ) => {
-    console.log('access getUserByEmail', email);
+    // console.log('access getUserByEmail', email);
     const existingUser = await getUserByEmail(email);
     
-    console.log('existing user?', existingUser);
+    // console.log('existing user?', existingUser);
     const accountId = await sendEmailOTP( 
         { email } 
     );
-    console.debug('accountId', accountId);
+    // console.debug('accountId', accountId);
     if (!accountId) throw new Error("Failed to send an OTP");
 
     if (!existingUser) {
-        console.log('Creating new user in database');
+        // console.log('Creating new user in database');
         const { databases } = await createAdminClient();
 
         await databases.createDocument(
@@ -119,7 +119,7 @@ export const SignInUser = async ({ email }: { email: string }) => {
                 { accountId: existingUser.accountId }
             )
         }
-        console.log("User found", existingUser);
+        // console.log("User found", existingUser);
 
         // user does not exist, return error
         return parseStringify({ accountId: null, error: "User not found" });
@@ -137,7 +137,7 @@ export const getCurrentUser = async () => {
 
         // get the current user account details
         const result = await account.get();
-        console.log("Current user account details:", result);
+        // console.log("Current user account details:", result);
     
         const user = await databases.listDocuments(
             appwriteConfig.databaseId,

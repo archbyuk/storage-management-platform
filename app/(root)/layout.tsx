@@ -50,7 +50,10 @@ export default async function Pagelayout({ children }: { children: React.ReactNo
                     accountId={currentUser.accountId}
                     $id={currentUser.$id}
                 /> 
-                <Header/>
+                <Header 
+                    userId={currentUser.$id} 
+                    accountId={currentUser.accountId} 
+                />
                 <div className="main-content">
                     {children}
                 </div>

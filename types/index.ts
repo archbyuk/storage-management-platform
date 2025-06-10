@@ -11,9 +11,13 @@ interface SegmentParams {
     type: string;
 }
 
-declare interface SearchParamProps {
+declare interface SearchParamsProps {
     params: Promise<SegmentParams>;
-    searchParams?: {}
+    searchParams?: Promise<
+        {
+            [url: string]: string | string[] | undefined;
+        }
+    >
 }
 
 declare interface GetFilesProps {

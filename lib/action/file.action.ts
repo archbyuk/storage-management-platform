@@ -40,6 +40,7 @@ export const uploadFile = async ( { file, ownerId, accountId, path }: UploadFile
             users: [],
             bucketFileId: bucketFile.$id,
         }
+        console.log("File document to be created: ", fileDoucment);
 
         // Create a new document in the specified collection to store the file metadata
         const newFile = await databases
@@ -58,6 +59,7 @@ export const uploadFile = async ( { file, ownerId, accountId, path }: UploadFile
                 handleError(error, "Failed to create file document");
             }
         )
+        console.log("New file document created: ", newFile);
 
         // Re-Render the page to reflect the new file upload
         revalidatePath(path);
@@ -88,6 +90,7 @@ const createQueries = ( { currentUser, types, searchText, sort, limit }: CreateQ
             ]
         )
     ]
+    console.log("Current user: ", currentUser);
     console.log("Check queries: ", queries);
 
     if (types.length > 0) queries.push(
@@ -110,6 +113,8 @@ const createQueries = ( { currentUser, types, searchText, sort, limit }: CreateQ
         )
     };
 
+    console.log("Final queries: ", queries);
+
     return queries;
 }
 
@@ -127,13 +132,15 @@ export const getFiles = async ( { types, searchText, sort, limit }: GetFilesProp
             currentUser, types, searchText, sort, limit,
         } );
 
+        console.log("Queries to fetch files: ", queries);
+
         const files = await databases.listDocuments(
             appwriteConfig.databaseId,
             appwriteConfig.filesCollectionId,
-            queries
+            queries,
         );
 
-        console.log("Files fetched: ", {files} );
+        console.log("Files fetched: ", files );
 
         return parseStringify(files);       // Return the fetched files as a parsed JSON object
     }

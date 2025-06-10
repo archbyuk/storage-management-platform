@@ -116,7 +116,7 @@ export const getFileTypesParams = (type: string): FileType[] => {
         case "video":
             return [ "video", "audio" ];
         default:
-            return [ "other" ];
+            return [ "document" ];
     }
 }
 

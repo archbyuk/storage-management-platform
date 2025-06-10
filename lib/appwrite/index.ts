@@ -16,7 +16,7 @@ export const createSessionClient = async() => {
         await cookies()
     ).get("appwrite-session")
     
-    console.log("Session cookie:", session);
+    // console.log("Session cookie:", session);
 
     if (!session) {
         throw new Error("No session found");
@@ -24,7 +24,7 @@ export const createSessionClient = async() => {
 
     // Set the session cookie in the Appwrite client
     client.setSession(session.value);
-    console.log("Client session set:", session.value);
+    // console.log("Client session set:", session.value);
 
     // Return the Appwrite client instance with the session set
     return {
