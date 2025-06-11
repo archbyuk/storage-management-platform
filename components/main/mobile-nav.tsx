@@ -1,16 +1,16 @@
 "use client";
 
-import Image from 'next/image';
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '../ui/sheet';
 import { useState } from 'react';
-import { Separator } from '../ui/separator';
-import { Button } from '../ui/button';
+import Image from 'next/image';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 import { navItems } from '@/constants/index';
 import { SignOutUser } from '@/lib/action/user.action';
-import FileUploader from './file-uploader';
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import FileUploader from '@/components/main/file-uploader';
 
 interface MobileNav {
     fullName: string;

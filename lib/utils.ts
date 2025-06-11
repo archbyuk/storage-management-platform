@@ -39,6 +39,28 @@ export const getFileType = (fileName: string) => {
 // Convert a file object into a temporary URL usable by the browser
 export const convertFileToUrl = (file: File) => URL.createObjectURL(file);
 
+export const convertFileSize = (fileSize: number, digits?: number) => {
+    if (fileSize < 1024) {
+        return fileSize + " Bytes";                // Less than 1 KB, show in Bytes
+    } 
+    
+    else if (fileSize < 1024 * 1024) {
+        const sizeInKB = fileSize / 1024;
+        return sizeInKB.toFixed(digits || 1) + " KB"; // Less than 1 MB, show in KB
+    } 
+    
+    else if (fileSize < 1024 * 1024 * 1024) {
+        const sizeInMB = fileSize / (1024 * 1024);
+        return sizeInMB.toFixed(digits || 1) + " MB"; // Less than 1 GB, show in MB
+    } 
+    
+    else {
+        const sizeInGB = fileSize / (1024 * 1024 * 1024);
+        return sizeInGB.toFixed(digits || 1) + " GB"; // 1 GB or more, show in GB
+    }
+    
+  };
+
 export const getFileIcon = (type: string | FileType, extension: string | undefined) => {
     
     switch (extension) {
@@ -102,7 +124,7 @@ export const getFileIcon = (type: string | FileType, extension: string | undefin
 // APPWRITE URL UTILS
 // Construct appwrite file URL - https://appwrite.io/docs/apis/rest#images
 export const constructFileUrl = (bucketFileId: string) => {
-    return `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${process.env.NEXT_PUBLIC_APPWRITE_BUCKET}/files/${bucketFileId}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT}`;
+    return `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${process.env.NEXT_PUBLIC_APPWRITE_BUCKET}/files/${bucketFileId}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID}`;
 };
 
 

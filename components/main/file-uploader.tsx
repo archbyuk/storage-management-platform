@@ -1,15 +1,15 @@
 "use client";
 
-import Image from "next/image";
-import { useDropzone } from "react-dropzone";
 import { useCallback, useState } from "react";
-import { MAX_FILE_SIZE } from "@/constants/index";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useDropzone } from "react-dropzone";
 import { convertFileToUrl, getFileType } from "@/lib/utils";
+import { uploadFile } from "@/lib/action/file.action";
+import { MAX_FILE_SIZE } from "@/constants/index";
 import Thumbnail from "@/components/main/thumbnail";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner"
-import { uploadFile } from "@/lib/action/file.action";
-import { usePathname } from "next/navigation";
 
 interface FileUploaderProps {
     accountId: string;

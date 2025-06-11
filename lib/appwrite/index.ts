@@ -1,8 +1,8 @@
 "use server";
 
-import { Account, Avatars, Client, Databases, Storage } from "node-appwrite";
-import { appwriteConfig } from "@/lib/appwrite/config";
 import { cookies } from "next/headers";
+import { appwriteConfig } from "@/lib/appwrite/config";
+import { Account, Avatars, Client, Databases, Storage } from "node-appwrite";
 
 export const createSessionClient = async() => {
     
@@ -41,6 +41,7 @@ export const createAdminClient = async() => {
         .setProject(appwriteConfig.projectId)
         .setKey(appwriteConfig.secretKey);
 
+    // console.log("Admin Client created with endpoint:", client);
     // Set the session cookie in the Appwrite client
     return {
         account: new Account(client),

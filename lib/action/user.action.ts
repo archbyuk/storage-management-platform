@@ -1,12 +1,12 @@
 "use server";
 
-import { createSessionClient, createAdminClient } from "@/lib/appwrite";
-import { appwriteConfig } from "@/lib/appwrite/config";
-import { Query, ID } from "node-appwrite";
-import { parseStringify } from "../utils";
-import { avatarPlaceholderUrl } from "@/constants";
 import { cookies } from 'next/headers';
 import { redirect } from "next/navigation";
+import { createSessionClient, createAdminClient } from "@/lib/appwrite";
+import { appwriteConfig } from "@/lib/appwrite/config";
+import { parseStringify } from "@/lib/utils";
+import { Query, ID } from "node-appwrite";
+import { avatarPlaceholderUrl } from "@/constants";
 
 // This function retrieves a user by thier email address from the Appwrite database
 const getUserByEmail = async (email: string) => {

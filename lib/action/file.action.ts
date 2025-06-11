@@ -1,13 +1,12 @@
 "use server";
 
-import { createAdminClient } from "../appwrite";
-import { appwriteConfig } from "../appwrite/config";
+import { revalidatePath } from "next/cache";
+import { createAdminClient } from "@/lib/appwrite";
+import { appwriteConfig } from "@/lib/appwrite/config";
+import { constructFileUrl, getFileType, parseStringify } from "@/lib/utils";
+import { getCurrentUser } from "@/lib/action/user.action";
 import { InputFile } from "node-appwrite/file";
 import { ID, Models, Query } from "node-appwrite";
-import { revalidatePath } from "next/cache";
-
-import { constructFileUrl, getFileType, parseStringify } from "@/lib/utils";
-import { getCurrentUser } from "./user.action";
 
 const handleError = (error: unknown, message: string) => {
     console.log(error, message);
@@ -17,6 +16,8 @@ const handleError = (error: unknown, message: string) => {
 export const uploadFile = async ( { file, ownerId, accountId, path }: UploadFileProps) => {
     // Create an admin client to interact with Appwrite services
     const { storage, databases } = await createAdminClient();
+
+    console.log("Uploading file: ", file);
 
     try {
         const inputFile = InputFile.fromBuffer(file, file.name);        // Create an Appwrite-specific InputFile object using the file buffer and name
@@ -40,7 +41,7 @@ export const uploadFile = async ( { file, ownerId, accountId, path }: UploadFile
             users: [],
             bucketFileId: bucketFile.$id,
         }
-        console.log("File document to be created: ", fileDoucment);
+        // console.log("File document to be created: ", fileDoucment);
 
         // Create a new document in the specified collection to store the file metadata
         const newFile = await databases
@@ -59,7 +60,7 @@ export const uploadFile = async ( { file, ownerId, accountId, path }: UploadFile
                 handleError(error, "Failed to create file document");
             }
         )
-        console.log("New file document created: ", newFile);
+        // console.log("New file document created: ", newFile);
 
         // Re-Render the page to reflect the new file upload
         revalidatePath(path);
@@ -132,7 +133,7 @@ export const getFiles = async ( { types, searchText, sort, limit }: GetFilesProp
             currentUser, types, searchText, sort, limit,
         } );
 
-        console.log("Queries to fetch files: ", queries);
+        // console.log("Queries to fetch files: ", queries);
 
         const files = await databases.listDocuments(
             appwriteConfig.databaseId,
@@ -140,7 +141,7 @@ export const getFiles = async ( { types, searchText, sort, limit }: GetFilesProp
             queries,
         );
 
-        console.log("Files fetched: ", files );
+        // console.log("Files fetched: ", files );
 
         return parseStringify(files);       // Return the fetched files as a parsed JSON object
     }

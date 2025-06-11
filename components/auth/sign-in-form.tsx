@@ -1,12 +1,12 @@
 "use client"
 
+import { useState } from "react"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import Image from "next/image"
-import { useState } from "react"
 import Link from "next/link"
-
+import { createAccount, SignInUser } from "@/lib/action/user.action"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -17,8 +17,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
-import { createAccount, SignInUser } from "@/lib/action/user.action"
 import OtpModal from "@/components/auth/otp-modal"
 import { toast } from "sonner"
 

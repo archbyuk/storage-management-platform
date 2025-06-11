@@ -1,14 +1,14 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Input } from "../ui/input";
-import { Models } from "node-appwrite";
+import Image from "next/image";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import Thumbnail from "./thumbnail";
-import FormattedDateTime from "./format-date-time";
 import { useDebounce } from "use-debounce";
+import { Models } from "node-appwrite";
 import { getFiles } from "@/lib/action/file.action";
+import { Input } from "@/components/ui/input";
+import Thumbnail from "@/components/main/thumbnail";
+import FormattedDateTime from "@/components/main/format-date-time";
 import { toast } from "sonner";
 
 export default function Search () {

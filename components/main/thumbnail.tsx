@@ -6,9 +6,10 @@ interface TumbnailProps {
     extension: string;
     url: string;
     className?: string
+    imageClassName?: string;
 }
 
-export default function Thumbnail( { type, extension, url, className }: TumbnailProps) {
+export default function Thumbnail( { type, extension, url, className, imageClassName }: TumbnailProps) {
     const isImage = type === "image" && extension !== "svg";
 
     return (
@@ -20,6 +21,7 @@ export default function Thumbnail( { type, extension, url, className }: Tumbnail
                 height={100}
                 className={cn(
                     "size-8 object-contain", 
+                    imageClassName,
                     isImage && "thumbnail-image"
                 )}
             />

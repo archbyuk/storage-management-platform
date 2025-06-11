@@ -1,10 +1,11 @@
 "use client";
 
-import { Button } from "../ui/button";
-import Image from "next/image";
-import Search from "./search";
-import FileUploader from "./file-uploader";
 import { useEffect } from "react";
+import Image from "next/image";
+import { SignOutUser } from "@/lib/action/user.action";
+import { Button } from "@/components/ui/button";
+import Search from "@/components/main/search";
+import FileUploader from "@/components/main/file-uploader";
 
 export default function Header ( { userId, accountId }: { userId: string; accountId: string }) {
 
@@ -12,13 +13,16 @@ export default function Header ( { userId, accountId }: { userId: string; accoun
         console.log("Header component mounted: ", { userId, accountId });
     },[])
 
+    const handleSignOut = async () => {
+        await SignOutUser();
+    }
     return (
         <header className="header">
             <Search/>
             
             <div className="header-wrapper">
                 <FileUploader ownerId={userId} accountId={accountId} />
-                <form>
+                <form action={handleSignOut}>
                     <Button className="sign-out-button" type="submit">
                         <Image
                             src="assets/icons/logout.svg"

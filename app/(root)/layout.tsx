@@ -12,7 +12,7 @@ export default async function Pagelayout({ children }: { children: React.ReactNo
 
     const currentUser = await getCurrentUser();
 
-    console.log("Current User:", currentUser);
+    // console.log("Current User:", currentUser);
 
     if (!currentUser) {
         redirect("/sign-in");
