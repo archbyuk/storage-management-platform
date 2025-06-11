@@ -6,7 +6,7 @@ import { convertFileSize } from "@/lib/utils";
 import ActionDropdown from "@/components/main/action-dropdown";
 
 export default function FileCard({ file }: { file: Models.Document }) {
-    console.log("File Card: ", file);
+    // console.log("File Card: ", file);
     
     return(
         // target="_blank" opens the link in a new tab

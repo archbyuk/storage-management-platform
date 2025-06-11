@@ -24,7 +24,7 @@ export default function FileUploader( { accountId, ownerId }: FileUploaderProps 
         // onDrop function to handle file selection and upload
         async ( acceptedFiles: File[] ) => {    // acceptedFiles is an array of files selected by the user (provided by react-dropzone)
             setFiles(acceptedFiles);    // set the files state with the accepted files
-            console.log("Files accepted:", acceptedFiles);
+            // console.log("Files accepted:", acceptedFiles);
 
             const uploadPromises = acceptedFiles.map(async (file) => {
                 if (file.size > MAX_FILE_SIZE) {
@@ -46,7 +46,7 @@ export default function FileUploader( { accountId, ownerId }: FileUploaderProps 
                 return uploadFile( { file, ownerId, accountId, path } ).then(
                     (uploadFile) => {
                         if (uploadFile) {
-                            console.log('uploaded file:', uploadFile);
+                            // console.log('uploaded file:', uploadFile);
                             setFiles((prevFiles) =>
                                 prevFiles.filter((f) => f.name !== file.name)
                             );

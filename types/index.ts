@@ -1,6 +1,4 @@
-import { StringValidation } from "zod";
-
-declare export type FileType = "document" | "image" | "video" | "audio" | "other";
+declare type FileType = "document" | "image" | "video" | "audio" | "other";
 
 declare interface UploadFileProps {
     file: File;
