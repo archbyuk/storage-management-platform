@@ -1,1 +1,90 @@
-export const avatarPlaceholderUrl = "https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcGYtaWNvbjQtamlyMjA2NC1wb3ItbC5qcGc.jpg"
+export const navItems = [
+    {
+      name: "Dashboard",
+      icon: "/assets/icons/dashboard.svg",
+      url: "/",
+    },
+    {
+      name: "Documents",
+      icon: "/assets/icons/documents.svg",
+      url: "/documents",
+    },
+    {
+      name: "Images",
+      icon: "/assets/icons/images.svg",
+      url: "/images",
+    },
+    {
+      name: "Media",
+      icon: "/assets/icons/video.svg",
+      url: "/media",
+    },
+    {
+      name: "Others",
+      icon: "/assets/icons/others.svg",
+      url: "/others",
+    },
+];
+  
+export const avatarPlaceholderUrl = 
+    // "https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcGYtaWNvbjQtamlyMjA2NC1wb3ItbC5qcGc.jpg"
+    "https://wallpapers.com/images/hd/placeholder-profile-icon-8qmjk1094ijhbem9.jpg"
+
+export const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
+
+// Sort types for files dashboard
+export const sortTypes = [
+    {
+        label: "Date created (newest)",
+        value: "createdAt-desc",
+    },
+    {
+        label: "Created Date (oldest)",
+        value: "createdAt-asc",
+    },
+    {
+        label: "Name (A-Z)",
+        value: "name-asc",
+    },
+    {
+        label: "Name (Z-A)",
+        value: "name-desc",
+    },
+    {
+        label: "Size (Highest)",
+        value: "size-desc",
+    },
+    {
+        label: "Size (Lowest)",
+        value: "size-asc",
+    },
+]
+
+// Dropdown items for file actions
+export const dropDownItems = [
+    {
+        label: "Rename",
+        icon: "/assets/icons/edit.svg",
+        value: "rename",
+    },
+    {
+        label: "Details",
+        icon: "/assets/icons/info.svg",
+        value: "details",
+    },
+    {
+        label: "Share",
+        icon: "/assets/icons/share.svg",
+        value: "share",
+    },
+    {
+        label: "Download",
+        icon: "/assets/icons/download.svg",
+        value: "download",
+    },
+    {
+        label: "Delete",
+        icon: "/assets/icons/delete.svg",
+        value: "delete",
+    },
+]
