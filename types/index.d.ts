@@ -1,4 +1,6 @@
-declare type FileType = "document" | "image" | "video" | "audio" | "other";
+import { StringValidation } from "zod";
+
+declare export type FileType = "document" | "image" | "video" | "audio" | "other";
 
 declare interface UploadFileProps {
     file: File;
@@ -25,4 +27,10 @@ declare interface GetFilesProps {
     searchText?: string;
     sort?: string;
     limit?: number;
+}
+
+declare interface ActionType {
+    label: string;
+    icon: string;
+    value: string;
 }

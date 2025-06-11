@@ -1,9 +1,12 @@
 'use client';
 
 import { Models } from "node-appwrite";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { dropDownItems } from "@/constants";
+import { constructDownloadUrl } from "@/lib/utils";
+import { ActionType } from "@/types";
 
 // import UI components
 import {
@@ -29,6 +32,12 @@ interface ActionDropdownProps {
 export default function ActionDropdown( { file }: ActionDropdownProps) {
     const [modalOpen, setModalOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [action, setAction] = useState<ActionType | null>(null);      // for the action to detail menu modal
+
+    useEffect(() => {
+        console.log(action) 
+        console.log(setModalOpen)
+    }, [action])
 
     return (
         <Dialog open={modalOpen} onOpenChange={setModalOpen}>
@@ -54,8 +63,43 @@ export default function ActionDropdown( { file }: ActionDropdownProps) {
                     {/* Dropdown menu rendering */}
                     {dropDownItems.map(
                         (dropdownItem) => (
-                            <DropdownMenuItem key={dropdownItem.value} className="shad-dropdown-item" onClick={}>
-
+                            <DropdownMenuItem key={dropdownItem.value} className="shad-dropdown-item" 
+                                onClick={() => {
+                                    // ex: "rename", "share", "delete", "details"
+                                    setAction(dropdownItem);
+                                    
+                                    // if the action is rename, share, delete or details, open the details modal
+                                    if (["rename", "share", "delete", "details"].includes(dropdownItem.value)) {
+                                        setModalOpen(true);
+                                    }
+                                }}
+                            >
+                                {dropdownItem.value === "download" ? (
+                                    <Link
+                                        href={constructDownloadUrl(file.bucketFileId)}
+                                        download={file.name}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <Image
+                                            src={dropdownItem.icon}
+                                            alt={dropdownItem.label}
+                                            width={30}
+                                            height={30}
+                                        />
+                                        {dropdownItem.label}
+                                    </Link>
+                                ):(
+                                    <div className="flex items-center gap-2">
+                                        <Image
+                                            src={dropdownItem.icon}
+                                            alt={dropdownItem.label}
+                                            width={30}
+                                            height={30}
+                                        />
+                                        {dropdownItem.label}
+                                    </div>   
+                                )}
+                                
                             </DropdownMenuItem>
                         )
                 

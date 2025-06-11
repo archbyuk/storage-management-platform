@@ -60,6 +60,7 @@ export const sortTypes = [
     },
 ]
 
+// Dropdown items for file actions
 export const dropDownItems = [
     {
         label: "Rename",

@@ -1,3 +1,4 @@
+import { FileType } from "@/types";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -39,6 +40,7 @@ export const getFileType = (fileName: string) => {
 // Convert a file object into a temporary URL usable by the browser
 export const convertFileToUrl = (file: File) => URL.createObjectURL(file);
 
+// Convert file size from bytes to human-readable format
 export const convertFileSize = (fileSize: number, digits?: number) => {
     if (fileSize < 1024) {
         return fileSize + " Bytes";                // Less than 1 KB, show in Bytes
@@ -61,6 +63,7 @@ export const convertFileSize = (fileSize: number, digits?: number) => {
     
   };
 
+// Get the file icon based on the file type or extension
 export const getFileIcon = (type: string | FileType, extension: string | undefined) => {
     
     switch (extension) {
@@ -127,7 +130,6 @@ export const constructFileUrl = (bucketFileId: string) => {
     return `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${process.env.NEXT_PUBLIC_APPWRITE_BUCKET}/files/${bucketFileId}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID}`;
 };
 
-
 // Get file types based on the type parameter
 export const getFileTypesParams = (type: string): FileType[] => {
     switch (type) {
@@ -167,4 +169,9 @@ export const formatDateTime = (isoString: string | null | undefined) => {
     // example: "2:30PM, 15 March"
     return `${time}, ${day} ${month}`;              // Return formatted data and time string
 
+}
+
+// Construct download URL for Appwrite files
+export const constructDownloadUrl = (bucketFileId: string) => {
+    return `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${process.env.NEXT_PUBLIC_APPWRITE_BUCKET}/files/${bucketFileId}/download?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID}`;
 }
