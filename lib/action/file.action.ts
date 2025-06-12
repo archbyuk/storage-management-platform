@@ -17,7 +17,7 @@ export const uploadFile = async ( { file, ownerId, accountId, path }: UploadFile
     // Create an admin client to interact with Appwrite services
     const { storage, databases } = await createAdminClient();
 
-    console.log("Uploading file: ", file);
+    // console.log("Uploading file: ", file);
 
     try {
         const inputFile = InputFile.fromBuffer(file, file.name);        // Create an Appwrite-specific InputFile object using the file buffer and name
@@ -91,8 +91,8 @@ const createQueries = ( { currentUser, types, searchText, sort, limit }: CreateQ
             ]
         )
     ]
-    console.log("Current user: ", currentUser);
-    console.log("Check queries: ", queries);
+    // console.log("Current user: ", currentUser);
+    // console.log("Check queries: ", queries);
 
     if (types.length > 0) queries.push(
         Query.equal("type", types)
@@ -114,7 +114,7 @@ const createQueries = ( { currentUser, types, searchText, sort, limit }: CreateQ
         )
     };
 
-    console.log("Final queries: ", queries);
+    // console.log("Final queries: ", queries);
 
     return queries;
 }
@@ -148,5 +148,99 @@ export const getFiles = async ( { types, searchText, sort, limit }: GetFilesProp
 
     catch (error) {
         handleError(error, "Failed to get files");
+    }
+}
+
+interface UpdateFileShareUsersProps {
+    fileId: string;
+    emails: string[];
+    path: string;
+}
+
+// Updates the list of users who can access a shared file by modifying the 'users' field in the file document.
+export const updateFileShareUsers = async( { fileId, emails, path }: UpdateFileShareUsersProps) => {
+    const { databases } = await createAdminClient();
+
+    try {
+        const updateShareUser = await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.filesCollectionId,
+            fileId,
+            { users: emails }
+        );
+
+        revalidatePath(path);       // Re-Render the page to reflect the updated file share users (for UI update)
+
+        console.log("Updated file share users: ", updateShareUser);
+
+        return parseStringify(updateShareUser);
+    }
+
+    catch (error) {
+        handleError(error, "Failed to update file share users");
+    }
+}
+
+interface RenameFileProps {
+    fileId: string;
+    name: string;
+    extension: string;
+    path: string;
+}
+
+// Renames a file by updating its name and extension in the file document.
+export const renameUploadedFile = async ( { fileId, name, extension, path}: RenameFileProps ) => {
+    const { databases } = await createAdminClient();
+
+    try {
+        const newName = `${name}.${extension}`;
+        const updatedFile = await databases.updateDocument (
+            appwriteConfig.databaseId,
+            appwriteConfig.filesCollectionId,
+            fileId,
+            { name: newName }       // Update the file document with the new name
+        )
+
+        revalidatePath(path);       // Re-Render the page to reflect the renamed file
+        
+        return parseStringify(updatedFile);       // Return the updated file document as a parsed JSON object
+    }
+
+    catch (error) {
+        handleError(error, "Failed to rename file");
+    }
+
+}
+
+interface DeleteFileProps {
+    fileId: string;
+    bucketFileId: string;
+    path: string;
+}
+
+export const deleteUploadedFile = async ( { fileId, bucketFileId, path }: DeleteFileProps ) => {
+    const { storage, databases } = await createAdminClient();
+
+    try {
+        const deletedFile = await databases.deleteDocument (
+            appwriteConfig.databaseId,
+            appwriteConfig.filesCollectionId,
+            fileId,            
+        )
+
+        // Delete the file from Appwrite storage
+        if (deletedFile) {
+            await storage.deleteFile(
+                appwriteConfig.bucketId, bucketFileId
+            );
+        }
+
+        revalidatePath(path);
+
+        return parseStringify({ status: "success" });
+    }
+
+    catch (error) {
+        handleError(error, "Failed to delete file");
     }
 }
