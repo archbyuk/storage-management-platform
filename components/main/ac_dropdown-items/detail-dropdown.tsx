@@ -71,6 +71,7 @@ export const ShareInput = ( { file, onInputChange, onRemove }: FileDetailsProps)
     useEffect(() => {
         console.log("ShareInput mounted with file: ", file);
     },[])
+    
     return (
         <>
             <ImageThumbnail file={file} />
@@ -101,8 +102,9 @@ export const ShareInput = ( { file, onInputChange, onRemove }: FileDetailsProps)
                                     className="flex items-center justify-between gap-2"
                                 >
                                     <p className="subtitle-2">{email}</p>
+                                    
                                     <Button
-                                        onClick={() => onRemove(email)}
+                                        onClick={() => onRemove?.(email)}
                                         className="share-remove-user"
                                     >
                                         <Image
