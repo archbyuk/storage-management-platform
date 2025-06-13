@@ -82,6 +82,9 @@ export const getFileIcon = (type: string | FileType, extension: string | undefin
           return "/assets/icons/file-document.svg";
         // Image
         case "svg":
+        case "jpg":
+        case "jpeg":
+        case "png":
           return "/assets/icons/file-image.svg";
         // Video
         case "mkv":
