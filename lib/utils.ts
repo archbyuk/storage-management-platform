@@ -82,6 +82,7 @@ export const getFileIcon = (type: string | FileType, extension: string | undefin
           return "/assets/icons/file-document.svg";
         // Image
         case "svg":
+            return "/assets/icons/file-svg.svg";
         case "jpg":
         case "jpeg":
         case "png":
