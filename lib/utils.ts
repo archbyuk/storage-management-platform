@@ -132,14 +132,16 @@ export const constructFileUrl = (bucketFileId: string) => {
 // Get file types based on the type parameter
 export const getFileTypesParams = (type: string): FileType[] => {
     switch (type) {
-        case "document":
-            return [ "document" ];
-        case "image":
-            return [ "image" ];
-        case "video":
-            return [ "video", "audio" ];
+        case "documents":
+            return ["document"];
+        case "images":
+            return ["image"];
+        case "media":
+            return ["video", "audio"];
+        case "others":
+            return ["other"];
         default:
-            return [ "document" ];
+            return ["document"];
     }
 }
 

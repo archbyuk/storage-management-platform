@@ -23,7 +23,7 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-    DropdownMenuTrigger,
+    DropdownMenuTrigger, 
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -52,7 +52,7 @@ export default function ActionDropdown( { file }: ActionDropdownProps) {
         setEmails([]);
 
         console.log("Modal closed and state reset");
-    };      // for the delete action modal overlay\
+    };
 
     // Troubleshooting: When using Shadcn Ui Dropdown or Dialog, due to state transition instability Pointer Event: None remains on <body>, preventing clicks
     // Processing: Both Dropdown and Modal detect the point, so Pointer Event: Auto-Recover is processed
