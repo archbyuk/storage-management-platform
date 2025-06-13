@@ -180,3 +180,72 @@ export const formatDateTime = (isoString: string | null | undefined) => {
 export const constructDownloadUrl = (bucketFileId: string) => {
     return `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${process.env.NEXT_PUBLIC_APPWRITE_BUCKET}/files/${bucketFileId}/download?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID}`;
 }
+
+interface FileTypeSpace {
+    size: number;
+    latestDate: string;
+}
+  
+interface TotalSpaceUsed {
+    image: FileTypeSpace;
+    document: FileTypeSpace;
+    video: FileTypeSpace;
+    audio: FileTypeSpace;
+    other: FileTypeSpace;
+    used: number;
+    all: number;
+}
+
+//   image: { size: 161417, latestDate: '2025-06-13T01:45:13.724+00:00' },
+//   document: { size: 68823208, latestDate: '2025-06-13T03:00:04.626+00:00' },
+//   video: { size: 0, latestDate: '' },
+//   audio: { size: 0, latestDate: '' },
+//   other: { size: 0, latestDate: '' },
+//   used: 68984625,
+//   all: 2147483648
+
+export const getUsageSummary = ( { totalSpace } : { totalSpace: TotalSpaceUsed } ) => {
+    // This function constructs a summary of the total space used by different file types
+    if (!totalSpace) return [];
+    return [
+        {
+          title: "Documents",
+          size: totalSpace.document.size,
+          latestDate: totalSpace.document.latestDate,
+          icon: "/assets/icons/file-document-light.svg",
+          url: "/documents",
+        },
+        {
+          title: "Images",
+          size: totalSpace.image.size,
+          latestDate: totalSpace.image.latestDate,
+          icon: "/assets/icons/file-image-light.svg",
+          url: "/images",
+        },
+        {
+          title: "Media",
+          size: totalSpace.video.size + totalSpace.audio.size,
+          latestDate:
+            totalSpace.video.latestDate > totalSpace.audio.latestDate
+              ? totalSpace.video.latestDate
+              : totalSpace.audio.latestDate,
+          icon: "/assets/icons/file-video-light.svg",
+          url: "/media",
+        },
+        {
+          title: "Others",
+          size: totalSpace.other.size,
+          latestDate: totalSpace.other.latestDate,
+          icon: "/assets/icons/file-other-light.svg",
+          url: "/others",
+        },
+    ];
+};
+
+// Calculate the percentage of used space based on the total size (2GB)
+export const calculatePercentage = (sizeInBytes: number) => {
+    const totalSizeInBytes = 2 * 1024 * 1024 * 1024;        // 2GB in bytes
+    const percentage = (sizeInBytes / totalSizeInBytes) * 100;
+    
+    return Number(percentage.toFixed(2));
+};
