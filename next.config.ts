@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
     images: {
         domains: [
             "images.rawpixel.com",
+            'cloud.appwrite.io'
         ]
     }, 
     experimental: {

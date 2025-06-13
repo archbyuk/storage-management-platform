@@ -82,6 +82,10 @@ export const getFileIcon = (type: string | FileType, extension: string | undefin
           return "/assets/icons/file-document.svg";
         // Image
         case "svg":
+            return "/assets/icons/file-svg.svg";
+        case "jpg":
+        case "jpeg":
+        case "png":
           return "/assets/icons/file-image.svg";
         // Video
         case "mkv":
@@ -132,14 +136,16 @@ export const constructFileUrl = (bucketFileId: string) => {
 // Get file types based on the type parameter
 export const getFileTypesParams = (type: string): FileType[] => {
     switch (type) {
-        case "document":
-            return [ "document" ];
-        case "image":
-            return [ "image" ];
-        case "video":
-            return [ "video", "audio" ];
+        case "documents":
+            return ["document"];
+        case "images":
+            return ["image"];
+        case "media":
+            return ["video", "audio"];
+        case "others":
+            return ["other"];
         default:
-            return [ "document" ];
+            return ["document"];
     }
 }
 

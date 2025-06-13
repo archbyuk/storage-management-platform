@@ -13,6 +13,7 @@ import { renameUploadedFile, updateFileShareUsers, deleteUploadedFile } from "@/
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -23,7 +24,7 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-    DropdownMenuTrigger,
+    DropdownMenuTrigger, 
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -51,16 +52,22 @@ export default function ActionDropdown( { file }: ActionDropdownProps) {
         setName(file.name);
         setEmails([]);
 
-        console.log("Modal closed and state reset");
-    };      // for the delete action modal overlay\
+        // console.log("Modal closed and state reset");
+    };
 
     // Troubleshooting: When using Shadcn Ui Dropdown or Dialog, due to state transition instability Pointer Event: None remains on <body>, preventing clicks
     // Processing: Both Dropdown and Modal detect the point, so Pointer Event: Auto-Recover is processed
+    // Solution: When the action is details, rename, share, or delete, set Pointer Event: Auto on <body>
     useEffect(() => {
-        if (!modalOpen && !isDropdownOpen) {
+        if (
+          action?.value === "details" ||
+          action?.value === "rename"  ||
+          action?.value === "share"   ||
+          action?.value === "delete"
+        ) {
           document.body.style.pointerEvents = "auto";
         }
-      }, [modalOpen, isDropdownOpen, ]);
+      }, [action?.value]);
 
     // This function handles the action based on the selected action type
     const handleAction = async () => {
@@ -143,6 +150,11 @@ export default function ActionDropdown( { file }: ActionDropdownProps) {
         return(
             <DialogContent className="shad-dialog button">
                 
+                {/* Description readable only by pad reader */}
+                <DialogDescription className="sr-only">
+                    {action.label}: 
+                </DialogDescription>
+
                 {/*  Render the action detail modals */}
                 <DialogHeader className="flex flex-col gap-3">
                     <DialogTitle className="text-center text-light-100">

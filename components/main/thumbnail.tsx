@@ -10,7 +10,7 @@ interface TumbnailProps {
 }
 
 export default function Thumbnail( { type, extension, url, className, imageClassName }: TumbnailProps) {
-    const isImage = type === "image" && extension !== "svg";
+    const isImage = type === "image" && !["svg", "png", "jpg", "jpeg"].includes(extension.toLowerCase());
 
     return (
         <figure className={cn("thumbnail", className)}>
@@ -22,7 +22,7 @@ export default function Thumbnail( { type, extension, url, className, imageClass
                 className={cn(
                     "size-8 object-contain", 
                     imageClassName,
-                    isImage && "thumbnail-image"
+                    isImage && "thumbnail-image rounded-full"
                 )}
             />
         </figure>
