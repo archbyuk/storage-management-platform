@@ -606,6 +606,29 @@
   .thumbnail-image {
     @apply size-full object-cover object-center;
   }
+
+  /* Logout Confirm */
+  .logout-confirm {
+    @apply space-y-4 rounded-2xl bg-white p-6 text-center shadow-drop-3;
+  }
+  .logout-confirm-title {
+    @apply text-lg font-semibold text-light-100;
+  }
+  .logout-confirm-message {
+    @apply text-sm text-light-200;
+  }
+  .logout-confirm-actions {
+    @apply flex justify-between gap-3 mt-6;
+  }
+  .logout-confirm-button {
+    @apply flex-1 h-[52px] rounded-full;
+  }
+  .logout-confirm-cancel {
+    @apply logout-confirm-button bg-white text-light-100 border border-light-300 hover:bg-light-100/10;
+  }
+  .logout-confirm-submit {
+    @apply logout-confirm-button bg-brand text-white hover:bg-brand-100;
+  }
 }
 
 @theme inline {
