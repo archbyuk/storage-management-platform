@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { navItems } from "@/constants/index";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +15,7 @@ interface SideBarProps {
 export default function SideBar( { fullName, email, avatar }: SideBarProps) {
 
     const pathname = usePathname();
+    const router = useRouter();
 
     return (
         <aside className="sidebar">
@@ -25,7 +26,8 @@ export default function SideBar( { fullName, email, avatar }: SideBarProps) {
                     alt="logo"
                     width={160}
                     height={30}
-                    className="hidden h-auto lg:block"
+                    className="hidden h-auto lg:block hover:cursor-pointer"
+                    onClick={() => router.push("/")}
                     // style={ 
                     //     {height: "auto", width: "auto"}
                     // }

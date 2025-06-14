@@ -99,20 +99,22 @@ export default async function Dashboard() {
                                                 url={file.url}
                                             />
 
-                                            <div className="recent-file-details">
-                                                <div className="flex flex-col gap-1">
-                                                    <p className="recent-file-name">
-                                                        {file.name}
-                                                    </p>
-                                                    
-                                                    <FormattedDateTime
-                                                        date={file.$createdAt}
-                                                        className="caption"
-                                                    />
-                                                </div>
+                                            <div className="recent-file-details flex w-full items-center justify-between">
                                                 
-                                                <ActionDropdown file={file} />
-                                            
+                                                {/* 왼쪽: 텍스트 정보와 드롭다운 수평 정렬 */}
+                                                <div className="flex items-center justify-between w-full">
+                                                    <div className="flex flex-col gap-1">
+                                                        <p className="recent-file-name truncate">
+                                                            {file.name}
+                                                        </p>
+                                                        <FormattedDateTime
+                                                            date={file.$createdAt}
+                                                            className="caption"
+                                                        />
+                                                    </div>
+
+                                                    <ActionDropdown file={file} />
+                                                </div>
                                             </div>
                                         </Link>
                                     )

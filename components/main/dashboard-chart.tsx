@@ -37,7 +37,10 @@ export default function DashboardChart( { used }: { used: number} ) {
     
     // Function to calculate the percentage of used space
     const chartData = [
-        { storage: "used", 10: used, fill: "white" }
+        { 
+            storage: "used", 
+            20: used, 
+            fill: "white" }
     ];
 
     return (
@@ -57,7 +60,7 @@ export default function DashboardChart( { used }: { used: number} ) {
                             stroke="none"
                             className="polar-grid"
                             polarRadius={
-                                [86, 74]
+                                [86, 70]
                             }
                         />
                         
@@ -100,7 +103,7 @@ export default function DashboardChart( { used }: { used: number} ) {
                     Available Storage
                 </CardTitle>
                 
-                <CardDescription className="chart-description">
+                <CardDescription className="chart-description whitespace-nowrap">
                     { used ? convertFileSize(used) : "2GB" } / 2GB
                 </CardDescription>
             </CardHeader>
