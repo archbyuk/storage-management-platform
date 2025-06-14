@@ -13,11 +13,11 @@ interface SideBarProps {
     fullName: string;
     email: string;
     avatar: string;
-    createdAt: string;
-    totalFiles: number;
+    // createdAt: string;
+    // totalFiles: number;
 }
 
-export default function SideBar( { fullName, email, avatar, createdAt, totalFiles }: SideBarProps) {
+export default function SideBar( { fullName, email, avatar }: SideBarProps) {
     const [userInfoOpen, setUserInfoOpen] = useState(false);
    
     const pathname = usePathname();
@@ -85,7 +85,7 @@ export default function SideBar( { fullName, email, avatar, createdAt, totalFile
                 className="w-full"
             />
 
-            <div className="sidebar-user-info cursor-pointer" onClick={() => setUserInfoOpen(true)}>
+            <div className="sidebar-user-info sidebar-user-info-interactions" onClick={() => setUserInfoOpen(true)}>
                 <Image
                    src={ avatar }
                    alt="Avatar"
@@ -100,14 +100,10 @@ export default function SideBar( { fullName, email, avatar, createdAt, totalFile
                 </div>
             </div>
 
+            {/* User details info component */}
             <UserDetails
                 isOpen={userInfoOpen}
                 onClose={() => setUserInfoOpen(false)}
-                fullName={fullName}
-                email={email}
-                avatar={avatar}
-                createdAt={createdAt}
-                totalFiles={totalFiles}
             />
 
         </aside>

@@ -29,6 +29,7 @@ export default function LogoutConfirmButton(){
                     alt="로그아웃" 
                     width={24} 
                     height={24} 
+                    className="w-6"
                 />
                 <p>Logout</p>
             </Button>

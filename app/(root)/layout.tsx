@@ -1,9 +1,11 @@
 import Header from "@/components/main/header";
 import MobileNavigation from "@/components/main/mobile-nav";
 import SideBar from "@/components/main/side-bar";
-
 import { getCurrentUser } from "@/lib/action/user.action";
 import { redirect } from "next/navigation";
+import UserInitializer from "@/components/cllient-store/user-initializser";
+
+
 
 // 이건 무슨뜻? 블로그 작성해보기
 export const dynamic = "force-dynamic";
@@ -22,8 +24,16 @@ export default async function Pagelayout({ children }: { children: React.ReactNo
                 fullName={currentUser.fullName}
                 avatar={currentUser.avatar}
                 email={currentUser.email}
-                createdAt={currentUser.$createdAt}
-                totalFiles={currentUser.files.length || 0}
+            />
+
+            <UserInitializer
+                user={{
+                    fullName: currentUser.fullName,
+                    email: currentUser.email,
+                    avatar: currentUser.avatar,
+                    createdAt: currentUser.$createdAt,
+                    totalFiles: currentUser.files.length || 0,
+                }}
             />
             
             <section className="flex h-full flex-1 flex-col">

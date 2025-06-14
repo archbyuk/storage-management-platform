@@ -6,15 +6,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { useUserStore } from '@/lib/store/user-store';
 
 export interface UserDetailsProps {
   isOpen: boolean;
   onClose: () => void;
-  fullName: string;
-  email: string;
-  avatar: string;
-  createdAt: string;
-  totalFiles: number;
 }
 
 interface DetailRowProps {
@@ -32,8 +28,11 @@ function DetailRow({ label, children }: DetailRowProps) {
 }
 
 export default function UserDetails(
-    { isOpen, onClose, fullName, email, avatar, createdAt, totalFiles }: UserDetailsProps ) {
+    { isOpen, onClose }: UserDetailsProps ) {
         
+        // // Extract user details from the zustand store, store name is `useUserStore`
+        const { fullName, email, avatar, createdAt, totalFiles } = useUserStore();
+  
         const userDetails = [
             { label: 'Full Name', value: fullName },
             { label: 'Email', value: email },

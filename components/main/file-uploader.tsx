@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import FakeProgress from "@/components/ui/fake-progress";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useDropzone } from "react-dropzone";
@@ -23,8 +24,8 @@ export default function FileUploader( { accountId, ownerId }: FileUploaderProps 
     const onDrop = useCallback( 
         // onDrop function to handle file selection and upload
         async ( acceptedFiles: File[] ) => {    // acceptedFiles is an array of files selected by the user (provided by react-dropzone)
-            setFiles(acceptedFiles);    // set the files state with the accepted files
-            // console.log("Files accepted:", acceptedFiles);
+            setFiles(acceptedFiles);
+        
 
             const uploadPromises = acceptedFiles.map(async (file) => {
                 if (file.size > MAX_FILE_SIZE) {
@@ -94,6 +95,10 @@ export default function FileUploader( { accountId, ownerId }: FileUploaderProps 
 
                     {files.map((file, index) => {
                         const { type, extension } = getFileType(file.name);
+                        
+                        // calculate the duration of the fake progress bar animation based on file size
+                    const sizeInMB = file.size / (1024 * 1024);
+                    const durationMs = Math.max(300, sizeInMB * 270);
 
                         return (
                             <li key={`${file.name} - ${index}`} className="uploader-preview-item">
@@ -105,14 +110,9 @@ export default function FileUploader( { accountId, ownerId }: FileUploaderProps 
                                         url={convertFileToUrl(file)}
                                     />
 
-                                    <div className="preview-item-name">
+                                    <div className="preview-item-name truncate max-w-[10ch]">
                                         {file.name}
-                                        <Image
-                                            src="/assets/icons/file-loader.gif"
-                                            width={80}
-                                            height={26}
-                                            alt="Loader"
-                                        />
+                                        <FakeProgress durationMs={durationMs} />
                                     </div>
                                 
                                 </div>
@@ -130,7 +130,6 @@ export default function FileUploader( { accountId, ownerId }: FileUploaderProps 
                 </ul>
             
             )}
-
         </div>
     )
 }

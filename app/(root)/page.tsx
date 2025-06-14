@@ -89,7 +89,7 @@ export default async function Dashboard() {
                                         <Link
                                             href={file.url}
                                             target="_blank"
-                                            className="flex items-center gap-3"
+                                            className="recent-file-link flex items-center gap-3 p-4"
                                             key={file.$id}
                                         >
                                         

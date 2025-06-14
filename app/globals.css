@@ -333,6 +333,41 @@
     /* body-1 */
     @apply text-[16px] leading-[24px] font-normal;
   }
+  .recent-file-link {
+    @apply relative overflow-hidden bg-none transition-transform duration-200 ease-in-out rounded-2xl text-gray-500;
+  }
+  
+  .recent-file-link:hover {
+    @apply scale-105;
+    /* four‑side gradient‑based dashed border */
+    background:
+    linear-gradient(90deg, currentColor 50%, transparent 0) repeat-x,
+    linear-gradient(90deg, currentColor 50%, transparent 0) repeat-x,
+    linear-gradient(0deg,  currentColor 50%, transparent 0) repeat-y,
+    linear-gradient(0deg,  currentColor 50%, transparent 0) repeat-y;
+    background-size: 15px 2px, 15px 2px, 2px 15px, 2px 15px;
+    background-position: 0 0, 0 100%, 0 0, 100% 0;
+    animation: linearGradientMove 0.6s infinite linear;
+    will-change: background-position;
+  }
+
+  /* Keyframes for the moving dashed effect */
+  @keyframes linearGradientMove {
+    0% {
+      background-position:
+        0 0,
+        0 100%,
+        0 0,
+        100% 0;
+    }
+    100% {
+      background-position:
+        15px 0,
+        -15px 100%,
+        0 -15px,
+        100% 15px;
+    }
+  }
 
   /* Type page */
   .page-container {
@@ -370,6 +405,15 @@
     /* primary-btn */
     @apply bg-brand hover:bg-brand-100 transition-all rounded-full;
     @apply text-[14px] leading-[20px] font-medium;
+  }
+
+  @keyframes fakeProgress {
+    from { width: 0%; }
+    to   { width: 100%; }
+  }
+  .fake-progress-bar {
+    @apply bg-blue-500 h-1 rounded;
+    animation-fill-mode: forwards;
   }
   
   /* ActionsModalContent */
@@ -461,7 +505,7 @@
   .uploader-button {
     @apply h-[52px] gap-2 px-10 shadow-drop-1;
     /* primary-btn */
-    @apply bg-brand hover:bg-brand-100 transition-all rounded-full;
+    @apply bg-brand hover:bg-brand-100 transition-all cursor-pointer rounded-full;
     @apply text-[14px] leading-[20px] font-medium;
   }
   .uploader-preview-list {
@@ -480,6 +524,15 @@
     @apply bg-red !rounded-[10px];
   }
 
+  @keyframes fakeProgress {
+    from { width: 0%; }
+    to   { width: 100%; }
+  }
+  .fake-progress-bar {
+    @apply bg-brand h-1 rounded;
+    animation-fill-mode: forwards;
+  }
+
   /* Header */
   .header {
     @apply hidden items-center justify-between gap-5 p-5 sm:flex lg:py-7 xl:gap-10;
@@ -490,7 +543,7 @@
     @apply flex items-center justify-center;
   }
   .sign-out-button {
-    @apply hidden lg:flex h-[52px] min-w-[54px] items-center justify-center rounded-full bg-brand/10 p-0 text-brand shadow-none transition-all hover:bg-brand/20;
+    @apply hidden md:flex h-[52px] min-w-[54px] items-center justify-center rounded-full bg-brand/10 p-0 text-brand shadow-none transition-all hover:bg-brand/20 cursor-pointer;
   }
 
   /* Mobile Navigation */
@@ -519,7 +572,7 @@
   }
   
   .mobile-sign-out-button {
-    @apply flex lg:hidden h-[52px] w-full items-center gap-4 rounded-full bg-brand/10 px-6 text-brand shadow-none transition-all hover:bg-brand/20;
+    @apply flex md:hidden h-[52px] w-full items-center gap-4 rounded-full bg-brand/10 px-6 text-brand shadow-none transition-all hover:bg-brand/20 cursor-pointer;
     /* h5 */
     @apply text-[16px] leading-[24px] font-semibold;
   }
@@ -575,6 +628,9 @@
   .sidebar-user-avatar {
     @apply aspect-square w-10 rounded-full object-cover;
   }
+  .sidebar-user-info-interactions {
+    @apply cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out;
+  }
 
   .shad-active {
     @apply bg-brand text-white shadow-drop-2;
@@ -618,18 +674,6 @@
   }  
   .user-info-modal {
     @apply fixed z-50 left-1/2 top-1/2 w-[90vw] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white shadow-2xl border border-gray-100;
-    animation: modalSlideIn 0.2s ease-out;
-  }
-  
-  @keyframes modalSlideIn {
-    from {
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
   }
   
   .user-info-modal-header {
@@ -651,7 +695,6 @@
     @apply ring-2 ring-brand-100 hover:ring-blue-200 transition-all duration-200;
   }
 
-  
 }
 
 @theme inline {
