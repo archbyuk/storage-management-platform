@@ -1,6 +1,13 @@
+import Link from "next/link";
+import Image from "next/image";
 import DashboardChart from "@/components/main/dashboard-chart";
 import { getFiles, getTotalSpaceUsed } from "@/lib/action/file.action"
-import { getUsageSummary } from "@/lib/utils";
+import { convertFileSize, getUsageSummary } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
+import FormattedDateTime from "@/components/main/format-date-time";
+import Thumbnail from "@/components/main/thumbnail";
+import { Models } from "node-appwrite";
+import ActionDropdown from "@/components/main/action-dropdown";
 
 export default async function Dashboard() {
     const [files, totalSpace] = await Promise.all(
@@ -14,11 +21,9 @@ export default async function Dashboard() {
     // console.log("Total space used: ", totalSpace);
 
     // If totalSpace is available, get the usage summary: This is preventing errors if totalSpace is null or undefined
-    if (totalSpace) {
-        const usageSummary = getUsageSummary (
-            { totalSpace }
-        );
-    }
+    const usageSummary = totalSpace ? getUsageSummary( { totalSpace }) : [];
+
+    // console.log("Files fetched: ", usageSummary);
     
     return (
         <div className="dashboard-container">
@@ -30,70 +35,95 @@ export default async function Dashboard() {
                 <DashboardChart used={totalSpace?.used ?? 0} /> 
 
                 <ul className="dashboard-summary-list">
+                    {usageSummary.map(
+                        (summary) => (
+                            <Link
+                                href={summary.url}
+                                key={summary.title}
+                                className="dashboard-summary-card"
+                            >
+                                <div className="space-y-4">
+                                    <div className="flex jusetify-between gap-3">
+                                        <Image
+                                            src={summary.icon}
+                                            width={100}
+                                            height={100}
+                                            alt="uploaded image"
+                                            className="summary-type-icon"
+                                        />
+                                        
+                                        <h4 className="summary-type-size">
+                                            {convertFileSize(summary.size) || 0}
+                                        </h4>
+                                    </div>
 
+                                    <h5 className="summary-type-title">
+                                        {summary.title}
+                                    </h5>
+
+                                    <Separator className="bg-light-400" />
+                                    
+                                    <FormattedDateTime
+                                        date={summary.latestDate}
+                                        className="text-center"
+                                    />
+                                </div>
+                            </Link>
+                        )
+                    )}
                 </ul>
             </section>
 
             {/* right section: recent files UI */}
             <section className="dashboard-recent-files">
-                second section
+                <h2 className="h3 xl:h2 text-light-100">
+                    Recent files uploaded
+                </h2>
+                {
+                    // Safely check length: fallback to [] if files or documents is undefined
+                    (files?.documents ?? []).length > 0 ? 
+                        (
+                            <ul className="mt-5 flex flex-col gap-5">
+                                {files?.documents.map(
+                                    (file: Models.Document) => (
+                                        <Link
+                                            href={file.url}
+                                            target="_blank"
+                                            className="flex items-center gap-3"
+                                            key={file.$id}
+                                        >
+                                        
+                                            <Thumbnail
+                                                type={file.type}
+                                                extension={file.extension}
+                                                url={file.url}
+                                            />
+
+                                            <div className="recent-file-details">
+                                                <div className="flex flex-col gap-1">
+                                                    <p className="recent-file-name">
+                                                        {file.name}
+                                                    </p>
+                                                    
+                                                    <FormattedDateTime
+                                                        date={file.$createdAt}
+                                                        className="caption"
+                                                    />
+                                                </div>
+                                                
+                                                <ActionDropdown file={file} />
+                                            
+                                            </div>
+                                        </Link>
+                                    )
+                                )}
+                            </ul>
+                        ) : (
+                            <p className="empty-list">No files uploaded</p>
+                        )
+                }
             </section>
 
         </div>
     )
 }
-
-// Total space used:  {
-//     image: { size: 161417, latestDate: '2025-06-13T01:45:13.724+00:00' },
-//     document: { size: 68823208, latestDate: '2025-06-13T03:00:04.626+00:00' },
-//     video: { size: 0, latestDate: '' },
-//     audio: { size: 0, latestDate: '' },
-//     other: { size: 0, latestDate: '' },
-//     used: 68984625,
-//     all: 2147483648
-//   }
-
-// declare interface GetFilesProps {
-//     types: FileType[];
-//     searchText?: string;
-//     sort?: string;
-//     limit?: number;
-// }
-
-// Files fetched:  {
-        //     total: 4,
-        //     documents: [
-        //       {
-        //         name: 'dg.pdf.pdf',
-        //         url: 'https://cloud.appwrite.io/v1/storage/buckets/6826f2cb001e3b3f7f21/files/6848e97d001ed6ebad33/view?project=6826ee41003c157cceca',
-        //         type: 'document',
-        //         bucketFileId: '6848e97d001ed6ebad33',
-        //         accountId: '683190320001f514d344',
-        //         extension: 'pdf',
-        //         size: 181000,
-        //         users: [Array],
-        //         '$id': '6848e97e003bac0fc9ba',
-        //         '$createdAt': '2025-06-11T02:27:11.134+00:00',
-        //         '$updatedAt': '2025-06-13T01:54:33.585+00:00',
-        //         '$permissions': [],
-        //         owner: [Object],
-        //         '$databaseId': '6826f0420018f99dd1ae',
-        //         '$collectionId': '6826f1990005284e69ff'
-        //       },
-        //       {
-        //         name: '테스트.pdf',
-        //         url: 'https://cloud.appwrite.io/v1/storage/buckets/6826f2cb001e3b3f7f21/files/6848ec8b0004806de94e/view?project=6826ee41003c157cceca',
-        //         type: 'document',
-        //         bucketFileId: '6848ec8b0004806de94e',
-        //         accountId: '683190320001f514d344',
-        //         extension: 'pdf',
-        //         size: 47791949,
-        //         users: [Array],
-        //         '$id': '6848ec9d0027b9d52691',
-        //         '$createdAt': '2025-06-11T02:40:29.905+00:00',
-        //         '$updatedAt': '2025-06-12T09:16:45.853+00:00',
-        //         '$permissions': [],
-        //         owner: [Object],
-        //         '$databaseId': '6826f0420018f99dd1ae',
-        //         '$collectionId': '6826f1990005284e69ff'
-        //       },
