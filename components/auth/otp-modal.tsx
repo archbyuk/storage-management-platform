@@ -35,14 +35,14 @@ export default function OtpModal({ accountId, email }: {accountId: string, email
         e.preventDefault();
         setIsLoading(true);
 
-        console.log({accountId, otp})
+        // console.log({accountId, otp})
 
         try {
             const sessionId = await verifySercet(
                 {accountId, otp}
             )
 
-            console.log('Session ID:', sessionId);
+            // console.log('Session ID:', sessionId);
 
             if (sessionId) {
                 router.push('/')

@@ -22,7 +22,7 @@ export default async function Page({ searchParams, params }: SearchParamsProps )
 
     const types = getFileTypesParams(type);     // Convert the type string to an array of FileType
 
-    console.log('Type: ', types);
+    // console.log('Type: ', types);
     
     const files = await getFiles({
         types, 

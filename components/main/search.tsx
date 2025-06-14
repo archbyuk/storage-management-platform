@@ -24,8 +24,8 @@ export default function Search () {
     const searchQuery = searchParams.get("query") || "";                // Get the search query from the URL parameters, default to an empty string, ex: ?query=searchTerm
 
     const handleClickItem = (file: Models.Document) => {
-        setOpen(false);         // Close the search results when an item is clicked
-        setResults([]);         // Clear the search results
+        setOpen(false);
+        setResults([]);
         
         // Use router.push to navigate to the corresponding file type page
         // The URL includes the current search query as a query parameter ( ?query = ... )
@@ -39,10 +39,10 @@ export default function Search () {
         const fetchFiles = async () => {
             // Check if the debounced query is empty
             if (debouncedQuery.length === 0) {
-                setResults([]);        // Reset results if query is too short
-                setOpen(false);        // Close search results
+                setResults([]);
+                setOpen(false);
                 
-                return router.push(path)        // Navigate to the current path without query
+                return router.push(path)
             }
             
             try{

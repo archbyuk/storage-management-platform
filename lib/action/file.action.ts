@@ -49,7 +49,7 @@ export const uploadFile = async ( { file, ownerId, accountId, path }: UploadFile
                 appwriteConfig.databaseId,
                 appwriteConfig.filesCollectionId,
                 ID.unique(),
-                fileDoucment
+                fileDoucment,
             )
         
             .catch(async (error: unknown) => {
@@ -149,6 +149,56 @@ export const getFiles = async ( { types, searchText, sort, limit }: GetFilesProp
     catch (error) {
         handleError(error, "Failed to get files");
     }
+}
+
+export const getTotalSpaceUsed = async () => {
+    const { databases } = await createAdminClient();
+
+    const currentUser = await getCurrentUser();
+    if (!currentUser) throw new Error("User not authenticated");
+
+    try {
+        // Fetch all file documents owned by the current user
+        const files = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.filesCollectionId,
+            [Query.equal("owner", [currentUser.$id])],  // filter by owner ID
+        )
+
+        // totalSpace object to hold the total space used by each file type
+        // The reason for initializing size: 0 and latestData: "" is to correctly calculate accumulated data from the initial state
+        const totalSpace = {
+            image: { size: 0, latestDate: "" },
+            document: { size: 0, latestDate: "" },
+            video: { size: 0, latestDate: "" },
+            audio: { size: 0, latestDate: "" },
+            other: { size: 0, latestDate: "" },
+            used: 0,
+            all: 2 * 1024 * 1024 * 1024     // 2GB total space
+        }
+        
+        // console.log('Files fetched: ', files);
+
+        files.documents.forEach(
+            (file) => {
+                const fileType = file.type as FileType;     // Explicitly type assertion
+                
+                totalSpace[fileType].size += file.size;     // Accumulates the size values ​​of objects that match the file type.
+                totalSpace.used += file.size;               // Total usage is also accumulated (sum of all types)
+
+                if ( !totalSpace[fileType].latestDate || "" || new Date(file.$updatedAt) > new Date(totalSpace[fileType].latestDate) ) {
+                    totalSpace[fileType].latestDate = file.$updatedAt;      // Update the latest date if the current file is newer
+                }
+            }
+        )
+        // console.log("Total space used: ", totalSpace);
+        return parseStringify(totalSpace);      // Return the total space used as a parsed JSON object
+    }
+
+    catch (error) {
+        handleError(error, "Failed to get total space used");
+    }
+
 }
 
 interface UpdateFileShareUsersProps {

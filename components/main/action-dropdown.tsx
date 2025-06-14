@@ -104,9 +104,9 @@ export default function ActionDropdown( { file }: ActionDropdownProps) {
         }
         
         const result = await actions[action.value as keyof typeof actions]();
-        console.log("Action result: ", result);
+        // console.log("Action result: ", result);
         success = !!result;
-        console.log("Action success: ", success);
+        // console.log("Action success: ", success);
         
         if (success) {
             setTimeout(() => {

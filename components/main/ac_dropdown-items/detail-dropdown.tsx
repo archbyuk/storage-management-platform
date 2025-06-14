@@ -4,7 +4,6 @@ import { convertFileSize, formatDateTime } from '@/lib/utils';
 import Thumbnail from '@/components/main/thumbnail';
 import FormattedDateTime from '@/components/main/format-date-time';
 import { Input } from '@/components/ui/input';
-import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 
 interface FileDetailsProps {
@@ -15,6 +14,7 @@ interface FileDetailsProps {
 
 // This component displays the details of a file, including its thumbnail, format, size, owner, and last edit date.
 const ImageThumbnail = ( { file }: FileDetailsProps) => {
+    
     return (
         <div className="file-details-thumbnail">
             <Thumbnail 
@@ -40,6 +40,7 @@ interface DetailRowProps {
 
 // This component renders a row with a label and a value, used to display file details.
 const DetailRow = ( { label, value }: DetailRowProps) => {
+    
     return (
         <div className="flex">
             <p className="file-details-label text-left">{label}</p>
@@ -50,6 +51,7 @@ const DetailRow = ( { label, value }: DetailRowProps) => {
 
 // This component displays the details of a file, including its thumbnail, format, size, owner, and last edit date.
 export const FileDetails = ( { file }: FileDetailsProps) => {
+    
     return (
         <>
             <ImageThumbnail file={file} />
@@ -68,10 +70,9 @@ export const FileDetails = ( { file }: FileDetailsProps) => {
 
 
 export const ShareInput = ( { file, onInputChange, onRemove }: FileDetailsProps) => {
-    useEffect(() => {
-        console.log("ShareInput mounted with file: ", file);
-    },[])
     
+    // console.log("Share Input: ", file);
+
     return (
         <>
             <ImageThumbnail file={file} />

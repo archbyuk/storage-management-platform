@@ -3,14 +3,13 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter  } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { navItems } from '@/constants/index';
-import { SignOutUser } from '@/lib/action/user.action';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
 import FileUploader from '@/components/main/file-uploader';
+import LogoutConfirmButton from '@/components/main/modal/logout-confirm';
 
 interface MobileNav {
     fullName: string;
@@ -24,11 +23,8 @@ export default function MobileNavigation ({ fullName, avatar, email, accountId, 
 
     const [open, setOpen] = useState(false);
     const pathname = usePathname();
+    const router = useRouter();
 
-    const handleLogout = async () => {
-        await SignOutUser();
-    };
-  
     return (
         <header className="mobile-header">
             <Image
@@ -36,7 +32,8 @@ export default function MobileNavigation ({ fullName, avatar, email, accountId, 
                 alt="logo"
                 width={120}
                 height={52}
-                className="h-auto"
+                className="h-auto hover:cursor-pointer"
+                onClick={() => router.push('/')}
             />
 
             <Sheet open={open} onOpenChange={setOpen}>
@@ -99,22 +96,10 @@ export default function MobileNavigation ({ fullName, avatar, email, accountId, 
 
                     <Separator className="my-5 bg-light-200/20" />
 
-                    <div className="flex flex-col justify-between gap-5 pb-5">
+                    <div className="flex flex-col justify-between gap-5 pb-5 lg:hidden">
                         <FileUploader ownerId={ownerId} accountId={accountId}/>
                         
-                        <Button
-                            type="submit"
-                            className="mobile-sign-out-button"
-                            onClick={ handleLogout }
-                        >
-                            <Image
-                                src="/assets/icons/logout.svg"
-                                alt="logo"
-                                width={24}
-                                height={24}
-                            />
-                            <p>Logout</p>
-                        </Button>
+                        <LogoutConfirmButton />
                     </div>
                 
                 </SheetContent>

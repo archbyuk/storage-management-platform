@@ -1,5 +1,10 @@
 declare type FileType = "document" | "image" | "video" | "audio" | "other";
 
+declare interface UserInfo {
+    userId: string;
+    accountId: string;
+}
+
 declare interface UploadFileProps {
     file: File;
     ownerId: string;
