@@ -12,8 +12,6 @@ export default async function Pagelayout({ children }: { children: React.ReactNo
 
     const currentUser = await getCurrentUser();
 
-    // console.log("Current User:", currentUser);
-
     if (!currentUser) {
         redirect("/sign-in");
     }
@@ -24,6 +22,8 @@ export default async function Pagelayout({ children }: { children: React.ReactNo
                 fullName={currentUser.fullName}
                 avatar={currentUser.avatar}
                 email={currentUser.email}
+                createdAt={currentUser.$createdAt}
+                totalFiles={currentUser.files.length || 0}
             />
             
             <section className="flex h-full flex-1 flex-col">

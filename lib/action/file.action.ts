@@ -119,6 +119,32 @@ const createQueries = ( { currentUser, types, searchText, sort, limit }: CreateQ
     return queries;
 }
 
+// Fetches user information from Appwrite Database based on accountId and userId.
+export const getUserInfo = async ( { accountId, userId }: UserInfo ) => {
+    const { databases } = await createAdminClient();
+    
+    try {
+        const userResult = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.usersCollectionId,
+            [
+                Query.equal("accountId", accountId),
+                Query.equal("$id", userId)
+            ]
+        );
+
+        const user = userResult.documents[0];
+        
+        return (
+            user ? parseStringify(user) : null
+        )
+
+    } catch (error) {
+        handleError(error, "Failed to get user info");
+    }
+}
+
+
 // Fetches file documents from Appwrite Database based on filtering, search, sorting, and limit criteria.
 export const getFiles = async ( { types, searchText, sort, limit }: GetFilesProps ) => {
     const { databases } = await createAdminClient();

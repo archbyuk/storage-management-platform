@@ -13,24 +13,24 @@ export default function LogoutConfirmButton(){
         <>
             {/* Logout Button: Web */}
             <Button onClick={() => setOpen(true)} className="sign-out-button">
-              <Image 
-                src="/assets/icons/logout.svg" 
-                alt="로그아웃" 
-                width={24} 
-                height={24} 
-                className="w-6"
-              />
+                <Image 
+                    src="/assets/icons/logout.svg" 
+                    alt="로그아웃" 
+                    width={24} 
+                    height={24} 
+                    className="w-6"
+                />
             </Button>
 
             {/* Logout Button: Mobile */}
             <Button onClick={() => setOpen(true)} className="mobile-sign-out-button">
-              <Image 
-                src="/assets/icons/logout.svg" 
-                alt="로그아웃" 
-                width={24} 
-                height={24} 
-              />
-              <p>Logout</p>
+                <Image 
+                    src="/assets/icons/logout.svg" 
+                    alt="로그아웃" 
+                    width={24} 
+                    height={24} 
+                />
+                <p>Logout</p>
             </Button>
         
             {/* Dialog for logout confirmation */}

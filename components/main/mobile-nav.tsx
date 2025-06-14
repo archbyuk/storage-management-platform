@@ -9,7 +9,7 @@ import { navItems } from '@/constants/index';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
 import FileUploader from '@/components/main/file-uploader';
-import LogoutConfirmButton from '@/components/main/confirm/logout-confirm';
+import LogoutConfirmButton from '@/components/main/modal/logout-confirm';
 
 interface MobileNav {
     fullName: string;

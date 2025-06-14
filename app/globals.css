@@ -608,10 +608,49 @@
   .logout-confirm-cancel {
     @apply flex h-[52px] w-full sm:w-[200px] lg:w-[200px] items-center justify-center rounded-full border border-light-300 bg-white text-light-100 hover:bg-light-100/10;
   }
-
   .logout-confirm-submit {
     @apply flex h-[52px] w-full sm:w-[200px] lg:w-[200px] items-center justify-center rounded-full bg-brand text-white hover:bg-brand-100;
   }
+
+  /* user info modal */
+  .user-info-modal-overlay {
+    @apply fixed inset-0 z-40 bg-black/40 backdrop-blur-sm;
+  }  
+  .user-info-modal {
+    @apply fixed z-50 left-1/2 top-1/2 w-[90vw] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white shadow-2xl border border-gray-100;
+    animation: modalSlideIn 0.2s ease-out;
+  }
+  
+  @keyframes modalSlideIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  
+  .user-info-modal-header {
+    @apply text-xl font-bold text-gray-900 mb-6 pb-4 border-b border-gray-100 px-6 pt-6;
+  } 
+  .user-info-modal-row {
+    @apply flex justify-between items-center px-6 py-4 hover:bg-gray-50/50 transition-colors duration-150;
+  }
+  .user-info-modal-row:last-child {
+    @apply rounded-b-2xl pb-6;
+  }
+  .user-info-modal-label {
+    @apply text-sm font-medium text-gray-600;
+  }
+  .user-info-modal-value {
+    @apply text-sm font-semibold text-gray-900 flex items-center gap-2;
+  }
+  .user-info-modal-value img {
+    @apply ring-2 ring-brand-100 hover:ring-blue-200 transition-all duration-200;
+  }
+
   
 }
 

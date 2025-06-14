@@ -1,6 +1,6 @@
 import Search from "@/components/main/search";
 import FileUploader from "@/components/main/file-uploader";
-import LogoutConfirmButton from "@/components/main/confirm/logout-confirm";
+import LogoutConfirmButton from "@/components/main/modal/logout-confirm";
 
 export default function Header ( { userId, accountId }: UserInfo ) {
     

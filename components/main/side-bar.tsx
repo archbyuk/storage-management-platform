@@ -2,23 +2,30 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+import UserDetails from "@/components/main/modal/user-details";
 import { usePathname, useRouter } from "next/navigation";
 import { navItems } from "@/constants/index";
 import { cn } from "@/lib/utils";
+
 
 interface SideBarProps {
     fullName: string;
     email: string;
     avatar: string;
+    createdAt: string;
+    totalFiles: number;
 }
 
-export default function SideBar( { fullName, email, avatar }: SideBarProps) {
-
+export default function SideBar( { fullName, email, avatar, createdAt, totalFiles }: SideBarProps) {
+    const [userInfoOpen, setUserInfoOpen] = useState(false);
+   
     const pathname = usePathname();
     const router = useRouter();
 
     return (
         <aside className="sidebar">
+            
             <Link href="/">
                 {/* web sidebar */}
                 <Image
@@ -78,7 +85,7 @@ export default function SideBar( { fullName, email, avatar }: SideBarProps) {
                 className="w-full"
             />
 
-            <div className="sidebar-user-info">
+            <div className="sidebar-user-info cursor-pointer" onClick={() => setUserInfoOpen(true)}>
                 <Image
                    src={ avatar }
                    alt="Avatar"
@@ -92,6 +99,16 @@ export default function SideBar( { fullName, email, avatar }: SideBarProps) {
                     <p className="caption">{ email }</p>
                 </div>
             </div>
+
+            <UserDetails
+                isOpen={userInfoOpen}
+                onClose={() => setUserInfoOpen(false)}
+                fullName={fullName}
+                email={email}
+                avatar={avatar}
+                createdAt={createdAt}
+                totalFiles={totalFiles}
+            />
 
         </aside>
     )

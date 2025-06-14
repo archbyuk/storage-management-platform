@@ -66,7 +66,7 @@ export default function SignInForm({ type }: { type: FormType }) {
                     : await SignInUser({ email: values.email})
       
                 setAccountId(user?.accountId ?? null);
-                console.log("User account ID:", user?.accountId);
+                // console.log("User account ID:", user?.accountId);
 
             if (type === "sign-in" && !user?.accountId) {
                 return toast.error("Account not found. Please sign up first.") // if account not found, show error message
