@@ -3,9 +3,7 @@ import MobileNavigation from "@/components/main/mobile-nav";
 import SideBar from "@/components/main/side-bar";
 import { getCurrentUser } from "@/lib/action/user.action";
 import { redirect } from "next/navigation";
-import UserInitializer from "@/components/cllient-store/user-initializser";
-
-
+import UserInitializer from "@/components/main/client-store/user-initializser";
 
 // 이건 무슨뜻? 블로그 작성해보기
 export const dynamic = "force-dynamic";
