@@ -1,0 +1,34 @@
+architecture-beta
+  %% 1. Client Layer
+  group client(mdi:web)[Client Layer]
+    service browser(logos:nextjs)[Browser Nextjs] in client
+
+  %% 2. Hosting Layer
+  group hosting(logos:vercel-icon)[Hosting]
+    service vercel(logos:vercel)[Vercel] in hosting
+
+  %% 3. Next.js Server Layer
+  group server(mdi:server)[Nextjs Server Layer]
+    service router(mdi:routes)[App Router] in server
+    service middleware(mdi:shield-account-variant)[Middleware] in server
+    service actions(mdi:file-code)[Server Actions] in server     
+
+  %% 4. Appwrite Service Layer
+  group appwrite(logos:appwrite-icon)[Appwrite BaaS]
+    service auth(mdi:account-lock)[Auth Service] in appwrite
+    service db(mdi:database)[DB Service] in appwrite
+    service storage(mdi:folder-upload)[Storage Service] in appwrite
+    service cdn(mdi:cloud-upload)[CDN Service] in appwrite
+    service email(mdi:email-fast)[OTP Service] in appwrite
+
+  %% Connections (Data Flow)
+  browser:R -- L:vercel
+  vercel:B -- T:router
+  router:B -- T:middleware
+  middleware:B -- T:actions
+
+  actions:R -- L:auth
+  actions:R -- L:db
+  actions:R -- L:storage
+  auth:R -- L:email
+  storage:R -- L:cdn
