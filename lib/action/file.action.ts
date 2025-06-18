@@ -109,9 +109,11 @@ const createQueries = ( { currentUser, types, searchText, sort, limit }: CreateQ
     if (sort) {
         const [sortBy, orderBy] = sort.split("-");
 
-        queries.push(
-            orderBy === "asc" ? Query.orderAsc(sortBy) : Query.orderDesc(sortBy)
-        )
+        const sortField = sortBy === "createdAt" ? "$createdAt" : sortBy;
+
+        queries.push (
+            orderBy === "asc" ? Query.orderAsc(sortField) : Query.orderDesc(sortField)
+        );
     };
 
     // console.log("Final queries: ", queries);
