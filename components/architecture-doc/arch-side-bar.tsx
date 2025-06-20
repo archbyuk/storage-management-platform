@@ -7,7 +7,7 @@ export default function ArchSideBar () {
     const router = useRouter();
     
   return (
-    <div className="sidebar">
+    <aside className="sidebar">
         
         <Link href="/">
             {/* web sidebar */}
@@ -66,6 +66,6 @@ export default function ArchSideBar () {
             </div>
           </div>
         </nav>
-      </div>
+      </aside>
   )
 }

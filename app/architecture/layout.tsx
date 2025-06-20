@@ -15,8 +15,8 @@ export default function ArchitectureLayout( { children }: {children: React.React
       {/* sidebar */}
       <ArchSideBar />
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col p-6">
+      {/* Flow Diagram */}
+      <div className="flex-1 flex flex-col p-2">
         {children}
       </div>
     </div>

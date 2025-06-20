@@ -694,7 +694,7 @@
   .user-info-modal-value img {
     @apply ring-2 ring-brand-100 hover:ring-blue-200 transition-all duration-200;
   }
-
+  
 }
 
 @theme inline {
