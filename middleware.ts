@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 // Public paths that don't require authentication
-const publicPaths = ['/sign-in', '/sign-up']
+const publicPaths = ['/sign-in', '/sign-up', '/architecture']
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -12,6 +12,11 @@ export function middleware(request: NextRequest) {
   
   // Check for Appwrite session cookie
   const session = request.cookies.get('appwrite-session')
+
+  // Special case: /architecture is always accessible regardless of auth status
+  if (pathname.startsWith('/architecture')) {
+    return NextResponse.next()
+  }
 
   // 1. If authenticated user tries to access public paths (sign-in, sign-up)
   // Redirect them to home page
@@ -43,4 +48,4 @@ export const config = {
      */
     '/((?!api|_next/static|_next/image|favicon.ico|assets).*)',
   ],
-} 
+}

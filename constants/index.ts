@@ -88,3 +88,36 @@ export const dropDownItems = [
         value: "delete",
     },
 ]
+
+export const architectureNavItems = [
+    {
+      id: 'overview',
+      label: '1. Overview',
+      href: '#overview',
+    },
+    {
+      id: 'auth',
+      label: '2. Authentication',
+      href: '#auth',
+    },
+    {
+      id: 'storage',
+      label: '3. Storage',
+      href: '#storage',
+    },
+    {
+      id: 'sync',
+      label: '4. Synchronization',
+      href: '#sync',
+    },
+    {
+      id: 'share',
+      label: '5. Sharing',
+      href: '#share',
+    },
+    {
+      id: 'api',
+      label: '6. API',
+      href: '#api',
+    }
+  ];
